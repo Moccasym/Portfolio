@@ -5,7 +5,7 @@ import { targetElements, defaultProps } from "./data/scrollRevealConfig";
 initScrollReveal(targetElements, defaultProps);
 initTiltEffect();
 
-document.getElementById("buttonMore").onclick = btnmore = () => {
+document.getElementById("buttonMore").onclick = () => {
     var moreText = document.getElementById("more");
     var btnText = document.getElementById("buttonMore");
   
