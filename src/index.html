@@ -15,6 +15,9 @@
   -
   Github Repo: https://github.com/Moccasym/Portfolio/
   Readme: https://github.com/Moccasym/Portfolio/README.md
+  -
+  -
+  -
 -->
 <!DOCTYPE html>
 <html lang="en" class="sr">
@@ -24,11 +27,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="shortcut icon" type="image/png" href="assets/favicon.png" />
 
-    <!-- Todo: put here your site title -->
+    <!-- Site Title -->
     <title>Felix Steinchen | Developer</title>
-    <!-- Todo: add some coding keywords below - e.g: (javascript, yourusername, etc) -->
-    <meta name="keywords" content="Moccasym, Felix Steinchen, C, javascript, html, css, 3D modelling" />
-    <!-- Todo: improve your SEO by adding a small description of you -->
+    <!-- Keywords -->
+    <meta name="keywords" content="Moccasym, Felix Steinchen, C, javascript, html, css, 3D modelling, felixsteinchen" />
+    <!-- Description -->
     <meta name="description" content="Felix Steinchen | Developer" />
 
     <link
@@ -42,10 +45,9 @@
     ></script>
 
     <!-- Todo: remove the below script once you finish your portfolio -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!-- <script async defer src="https://buttons.github.io/buttons.js"></script> -->
   </head>
 
-  <!-- Todo: read the following HTML Todos to create your stunning portfolio website -->
   <body>
     <div id="top"></div>
 
@@ -59,8 +61,7 @@
         </h1>
         <p class="hero-cta load-hidden">
           <a rel="noreferrer" class="cta-btn cta-btn--hero" href="#about"
-            >Know more</a
-          >
+            >Know more</a>
         </p>
       </div>
     </section>
@@ -72,8 +73,9 @@
         <h2 class="section-title load-hidden">About me</h2>
         <div class="row about-wrapper">
           <div class="col-md-6 col-sm-12">
-            <div class="about-wrapper__image load-hidden">
+            <div id="profileIMG" class="about-wrapper__image load-hidden">
               <img
+                
                 alt="Profile Image"
                 class="img-fluid rounded shadow-lg"
                 height="auto"
@@ -88,29 +90,39 @@
               <p class="about-wrapper__info-text">
                 Welcome to my portfolio website! My name is Felix Steinchen, and I'm a highly motivated and dedicated Full Stack Web Developer based in Germany. 
                 With a strong background in electrical engineering, microtechnology, and hardware development, 
-                I bring a unique perspective to my work in web development.
+                I bring a unique perspective to my work in web development. 
+                <!-- <p class="about-wrapper__info-text" id="dots">...</p> -->
+                
+                <div id="more">
+                  <p class="about-wrapper__info-text" id="more">
+                    After earning a Master's degree in Science with a focus on Microsystems Technologies, I decided to pursue my passion for Full-Stack Development. 
+                    I recently completed an online course in Full Stack Web Development by Zero to Mastery on Udemy, 
+                    and I'm constantly seeking opportunities to improve my skills and stay up-to-date with the latest technologies.
+                  </p>
+                  <p class="about-wrapper__info-text">
+                    My expertise in computer science and programming, combined with my foundation in electrical engineering, 
+                    allows me to design and implement efficient and scalable web applications that meet the needs of my clients. 
+                    I am proficient in a wide range of programming languages and technologies, including ReactJS, which I am currently pursuing expertise in.
+                  </p>
+                  <p class="about-wrapper__info-text">
+                    As a Full Stack Web Developer, I am committed to delivering innovative software solutions that meet the unique needs of each project. 
+                    I have strong project management skills, and I work closely with clients to ensure that their vision is realized in every aspect of the development process.
+                  </p>
+                  <p class="about-wrapper__info-text">
+                    My greatest passion and life fullfilling purpose is climbing. It really showed me what effort and dedication can achive. I also enjoy music and once in a while 
+                    I play guitar and drums and be creative with good company. 
+                  </p>
+                </div>
+                <a id="buttonMore">...Read More</a>
               </p>
-              <p class="about-wrapper__info-text">
-                After earning a Master's degree in Science with a focus on Microsystems Technologies, I decided to pursue my passion for Full-Stack Development. 
-                I recently completed an online course in Full Stack Web Development by Zero to Mastery on Udemy, 
-                and I'm constantly seeking opportunities to improve my skills and stay up-to-date with the latest technologies.
-              </p>
-              <p class="about-wrapper__info-text">
-                My expertise in computer science and programming, combined with my foundation in electrical engineering, 
-                allows me to design and implement efficient and scalable web applications that meet the needs of my clients. 
-                I am proficient in a wide range of programming languages and technologies, including ReactJS, which I am currently pursuing expertise in.
-              </p>
-              <p class="about-wrapper__info-text">
-                As a Full Stack Web Developer, I am committed to delivering innovative software solutions that meet the unique needs of each project. 
-                I have strong project management skills, and I work closely with clients to ensure that their vision is realized in every aspect of the development process.
-              </p>
+              <!-- <span class="d-flex mt-3">
+                <button onclick="extend()" id="extendBtn">Read More
+                </button>
+              </span> -->
+              
               <p class="about-wrapper__info-text">
                 Thank you for taking the time to visit my portfolio website. I'm excited to connect with new clients and collaborators, 
                 and I look forward to the opportunity to bring your project to life.
-              </p>
-              <p class="about-wrapper__info-text">
-                My greatest passion and life fullfilling purpose is climbing. It really showed me what effort and dedication can achive. I also enjoy music and once in a while 
-                I play guitar and drums and be creative with good company. 
               </p>
               <span class="d-flex mt-3">
                 <a
@@ -122,6 +134,9 @@
                   View Resume
                 </a>
               </span>
+
+              
+
             </div>
           </div>
         </div>
@@ -134,6 +149,64 @@
       <div class="container">
         <div class="project-wrapper">
           <h2 class="section-title dark-blue-text">Projects</h2>
+
+          <!-- Notice: each .row is a project -->
+          <div class="row">
+            <div class="col-lg-4 col-sm-12">
+              <div class="project-wrapper__text load-hidden">
+                <h3 class="project-wrapper__text-title">
+                  Face Detection Brain</h3>
+                <div>
+                  <p class="mb-4">
+                    Face Detection Brain is a web application that leverages the power of Clarifai's advanced facial recognition API 
+                    to accurately detect and identify human faces in images.
+                  </p> 
+                  <p class="mb-4">      
+                    I integrated Clarifai's API with React and Node.js to create a user-friendly interface that allows users to upload images 
+                    and receive precise results, complete with bounding boxes highlighting recognized faces. 
+                    Through my contributions, I designed and implemented the app's frontend, managed API calls, 
+                    and implemented user authentication using JWT tokens.
+                  </p>
+                </div>
+                <a
+                  rel="noreferrer"
+                  target="_blank"
+                  class="cta-btn cta-btn--hero"
+                  href="https://face-detection-brain.onrender.com/"
+                >
+                  Live
+                </a>
+                <a
+                  rel="noreferrer"
+                  target="_blank"
+                  class="cta-btn text-color-main"
+                  href="https://github.com/Moccasym/face-recognition-brain"
+                >
+                  Source Code
+                </a>
+              </div>
+            </div>
+            <div class="col-lg-8 col-sm-12">
+              <div class="project-wrapper__image load-hidden">
+                <a rel="noreferrer" href="#!" target="_blank">
+                  <div
+                    data-tilt
+                    data-tilt-max="4"
+                    data-tilt-glare="true"
+                    data-tilt-max-glare="0.5"
+                    class="thumbnail rounded js-tilt"
+                  >
+                    <img
+                      alt="Project Image"
+                      class="img-fluid"
+                      src="assets/facedetect.png"
+                    />
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- /END Project -->
 
           <!-- Notice: each .row is a project -->
           <div class="row">
