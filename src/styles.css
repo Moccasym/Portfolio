@@ -531,6 +531,71 @@ main {
   min-height: 100%;
 }
 
+.contact-form {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.4rem;
+}
+
+.contact-field {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.contact-field span {
+  color: var(--muted);
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12rem;
+}
+
+.contact-field input,
+.contact-field textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text);
+  font: inherit;
+  padding: 0.95rem 1rem;
+  outline: none;
+  transition: border-color 0.18s ease, background 0.18s ease;
+}
+
+.contact-field textarea {
+  resize: vertical;
+  min-height: 10rem;
+}
+
+.contact-field input:focus,
+.contact-field textarea:focus {
+  border-color: rgba(142, 247, 177, 0.55);
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.contact-actions .button[disabled] {
+  opacity: 0.72;
+  cursor: wait;
+}
+
+.contact-status {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.contact-status.success {
+  color: var(--accent);
+}
+
+.contact-status.error {
+  color: #ff8e8e;
+}
+
+.contact-status.info {
+  color: var(--muted);
+}
+
 .contact-list li {
   display: flex;
   flex-direction: column;

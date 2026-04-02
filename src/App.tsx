@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type ChangeEvent } from 'react';
+import { useForm, ValidationError } from '@formspree/react';
 import profileImage from './assets/profile.jpg';
 import climberImage from './assets/climber.png';
 import azoriImage from './assets/azori.png';
@@ -64,15 +65,28 @@ type Content = {
     title: string;
     intro: string;
     cardText: string;
-    emailButton: string;
     githubButton: string;
     detailsLabel: string;
-    emailLabel: string;
+    githubLabel: string;
     locationLabel: string;
     locationValue: string;
-    linkedinLabel: string;
+    availabilityLabel: string;
+    availabilityValue: string;
+    formNameLabel: string;
+    formEmailLabel: string;
+    formMessageLabel: string;
+    formSubmit: string;
+    formSending: string;
+    formSuccess: string;
+    formError: string;
   };
   projectLearnedLabel: string;
+};
+
+type FormState = {
+  name: string;
+  email: string;
+  message: string;
 };
 
 const languageOptions: { code: Language; label: string }[] = [
@@ -103,7 +117,7 @@ const contentByLanguage: Record<Language, Content> = {
       eyebrow: 'Selected work',
       title: 'Recent projects and product builds.',
       intro:
-        'A mix of client-oriented product work, internal-tool style systems, and app concepts built to a usable level rather than left as static mockups.',
+        'A mix of client-oriented product work, internal-tool style systems, and app ideas developed into usable, testable products.',
       projects: [
         {
           title: 'Climber',
@@ -255,13 +269,20 @@ const contentByLanguage: Record<Language, Content> = {
         'If you already know the rough problem, that is enough to start a conversation. I can help shape scope, first phase, and the fastest route to something real.',
       cardText:
         'If you need an MVP, a mobile app, an internal tool, or a cleaner product website, send me the rough version. I can help shape the fastest path to a usable first version.',
-      emailButton: 'Email Felix',
       githubButton: 'GitHub',
       detailsLabel: 'Details',
-      emailLabel: 'Email',
+      githubLabel: 'GitHub',
       locationLabel: 'Location',
       locationValue: 'Germany, remote across Europe',
-      linkedinLabel: 'LinkedIn',
+      availabilityLabel: 'Availability',
+      availabilityValue: 'Freelance projects and focused product work',
+      formNameLabel: 'Name',
+      formEmailLabel: 'Email',
+      formMessageLabel: 'What are you trying to build?',
+      formSubmit: 'Send request',
+      formSending: 'Sending...',
+      formSuccess: 'Thanks. Your message has been sent.',
+    formError: 'Something went wrong. Please try again shortly.',
     },
     projectLearnedLabel: 'What I learned:',
   },
@@ -438,13 +459,20 @@ const contentByLanguage: Record<Language, Content> = {
         'Wenn das grobe Problem schon klar ist, reicht das für ein erstes Gespräch. Ich helfe dabei, Scope, erste Phase und den schnellsten Weg zu etwas Reellem zu definieren.',
       cardText:
         'Wenn du ein MVP, eine Mobile App, ein internes Tool oder eine klarere Produktseite brauchst, schick mir einfach die grobe Version. Ich helfe dabei, den schnellsten Weg zu einer brauchbaren ersten Version zu finden.',
-      emailButton: 'Felix mailen',
       githubButton: 'GitHub',
       detailsLabel: 'Details',
-      emailLabel: 'E-Mail',
+      githubLabel: 'GitHub',
       locationLabel: 'Standort',
       locationValue: 'Deutschland, remote in Europa',
-      linkedinLabel: 'LinkedIn',
+      availabilityLabel: 'Verfügbarkeit',
+      availabilityValue: 'Freelance-Projekte und fokussierte Produktarbeit',
+      formNameLabel: 'Name',
+      formEmailLabel: 'E-Mail',
+      formMessageLabel: 'Was möchtest du bauen?',
+      formSubmit: 'Anfrage senden',
+      formSending: 'Wird gesendet...',
+      formSuccess: 'Danke. Deine Nachricht wurde gesendet.',
+      formError: 'Etwas ist schiefgelaufen. Bitte versuche es bald noch einmal.',
     },
     projectLearnedLabel: 'Was ich gelernt habe:',
   },
@@ -621,13 +649,20 @@ const contentByLanguage: Record<Language, Content> = {
         'Si ya conoces el problema en términos generales, eso basta para iniciar la conversación. Puedo ayudar a definir alcance, primera fase y la ruta más rápida hacia algo real.',
       cardText:
         'Si necesitas un MVP, una app móvil, una herramienta interna o una web de producto más clara, envíame la versión aproximada. Puedo ayudar a encontrar la ruta más rápida hacia una primera versión útil.',
-      emailButton: 'Enviar email a Felix',
       githubButton: 'GitHub',
       detailsLabel: 'Detalles',
-      emailLabel: 'Email',
+      githubLabel: 'GitHub',
       locationLabel: 'Ubicación',
       locationValue: 'Alemania, remoto en Europa',
-      linkedinLabel: 'LinkedIn',
+      availabilityLabel: 'Disponibilidad',
+      availabilityValue: 'Proyectos freelance y trabajo de producto enfocado',
+      formNameLabel: 'Nombre',
+      formEmailLabel: 'Email',
+      formMessageLabel: '¿Qué estás intentando construir?',
+      formSubmit: 'Enviar solicitud',
+      formSending: 'Enviando...',
+      formSuccess: 'Gracias. Tu mensaje se ha enviado.',
+      formError: 'Algo salió mal. Inténtalo de nuevo en un momento.',
     },
     projectLearnedLabel: 'Lo que aprendí:',
   },
@@ -655,7 +690,25 @@ function App() {
     document.documentElement.lang = language;
   }, [language]);
 
+  const [formData, setFormData] = useState<FormState>({
+    name: '',
+    email: '',
+    message: '',
+  });
+  const [formState, handleFormspreeSubmit] = useForm('xbdpagzz');
+
   const content = contentByLanguage[language];
+
+  useEffect(() => {
+    if (formState.succeeded) {
+      setFormData({ name: '', email: '', message: '' });
+    }
+  }, [formState.succeeded]);
+
+  const handleFieldChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = event.target;
+    setFormData((current) => ({ ...current, [name]: value }));
+  };
 
   return (
     <div className="page-shell">
@@ -868,44 +921,105 @@ function App() {
           <div className="contact-grid">
             <div className="contact-card primary-contact-card">
               <p>{content.contact.cardText}</p>
-              <div className="contact-actions">
-                <a
-                  className="button button-primary"
-                  href="mailto:felixsteinchen@web.de?subject=Project%20Inquiry"
-                >
-                  {content.contact.emailButton}
-                </a>
-                <a
-                  className="button button-secondary"
-                  href="https://github.com/Moccasym"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {content.contact.githubButton}
-                </a>
-              </div>
+              <form className="contact-form" onSubmit={handleFormspreeSubmit}>
+                <label className="contact-field">
+                  <span>{content.contact.formNameLabel}</span>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleFieldChange}
+                    autoComplete="name"
+                    required
+                  />
+                </label>
+                <ValidationError
+                  prefix={content.contact.formNameLabel}
+                  field="name"
+                  errors={formState.errors}
+                  className="contact-status error"
+                />
+                <label className="contact-field">
+                  <span>{content.contact.formEmailLabel}</span>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleFieldChange}
+                    autoComplete="email"
+                    required
+                  />
+                </label>
+                <ValidationError
+                  prefix={content.contact.formEmailLabel}
+                  field="email"
+                  errors={formState.errors}
+                  className="contact-status error"
+                />
+                <label className="contact-field">
+                  <span>{content.contact.formMessageLabel}</span>
+                  <textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleFieldChange}
+                    rows={6}
+                    required
+                  />
+                </label>
+                <ValidationError
+                  prefix={content.contact.formMessageLabel}
+                  field="message"
+                  errors={formState.errors}
+                  className="contact-status error"
+                />
+                <div className="contact-actions">
+                  <button
+                    className="button button-primary"
+                    type="submit"
+                    disabled={formState.submitting}
+                  >
+                    {formState.submitting
+                      ? content.contact.formSending
+                      : content.contact.formSubmit}
+                  </button>
+                  <a
+                    className="button button-secondary"
+                    href="https://github.com/Moccasym"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {content.contact.githubButton}
+                  </a>
+                </div>
+                {formState.succeeded ? (
+                  <p className="contact-status success">{content.contact.formSuccess}</p>
+                ) : null}
+                {!formState.succeeded && formState.errors && formState.errors.getFormErrors().length > 0 ? (
+                  <p className="contact-status error">{content.contact.formError}</p>
+                ) : null}
+              </form>
             </div>
 
             <div className="contact-card">
               <p className="panel-label">{content.contact.detailsLabel}</p>
               <ul className="contact-list">
                 <li>
-                  <span>{content.contact.emailLabel}</span>
-                  <a href="mailto:felixsteinchen@web.de">felixsteinchen@web.de</a>
+                  <span>{content.contact.githubLabel}</span>
+                  <a
+                    href="https://github.com/Moccasym"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    github.com/Moccasym
+                  </a>
                 </li>
                 <li>
                   <span>{content.contact.locationLabel}</span>
                   <strong>{content.contact.locationValue}</strong>
                 </li>
                 <li>
-                  <span>{content.contact.linkedinLabel}</span>
-                  <a
-                    href="https://www.linkedin.com/in/felix-steinchen-20487b266/"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Felix Steinchen
-                  </a>
+                  <span>{content.contact.availabilityLabel}</span>
+                  <strong>{content.contact.availabilityValue}</strong>
                 </li>
               </ul>
             </div>
