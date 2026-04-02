@@ -552,8 +552,13 @@ main {
 }
 
 @media (max-width: 1080px) {
-  .hero,
   .contact-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 920px) {
+  .hero {
     grid-template-columns: 1fr;
   }
 
